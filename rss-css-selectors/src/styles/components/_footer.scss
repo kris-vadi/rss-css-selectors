@@ -1,0 +1,18 @@
+.footer__wrapper {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.footer__rss-link {
+  width: 100px;
+  height: 40px;
+  display: inline-block;
+  background-image: url(../assets/svg/rss.svg);
+  background-size: contain;
+  background-repeat: no-repeat;
+  @extend %transition;
+  &:hover {
+    opacity: 0.9;
+  }
+}

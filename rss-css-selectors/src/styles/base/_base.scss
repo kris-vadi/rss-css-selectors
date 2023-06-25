@@ -1,0 +1,25 @@
+html {
+  font-size: 10px;
+}
+
+.body {
+  font-family: 'Exo2', sans-serif;
+  font-size: 1.8rem;
+  background-color: $background;
+  color: $text;
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+  a {
+    color: $text-link;
+    @extend %transition;
+    &:hover {
+      color: lighten($text-link, 10%);
+    }
+  }
+}
+
+.wrapper {
+ margin: 0 auto;
+ padding: 20px;
+}
