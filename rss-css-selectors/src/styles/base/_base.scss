@@ -12,6 +12,7 @@ html {
   min-height: 100vh;
   a {
     color: $text-link;
+    cursor: pointer;
     @extend %transition;
     &:hover {
       color: lighten($text-link, 10%);

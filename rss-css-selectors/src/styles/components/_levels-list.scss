@@ -1,0 +1,24 @@
+.levels-list {
+  display: flex;
+  flex-direction: column;
+  padding: 20px 0;
+  gap: 10px;
+}
+
+.levels-list__checkmark {
+  position: relative;
+  display: inline-block;
+  margin-right: 14px;
+  width: 8px;
+  height: 13px;
+  top: -1px;
+  transform: rotate(40deg);
+  opacity: .55;
+  border: solid 3px $text;
+  border-width: 0 3px 3px 0;
+}
+
+.levels-list__number {
+  font-weight: 600;
+  margin-right: 10px;
+}

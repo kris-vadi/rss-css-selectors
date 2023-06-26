@@ -1,3 +1,21 @@
 .main {
   flex: 1 0 auto;
 }
+
+.main__wrapper {
+  display: flex;
+}
+
+.main__left-col{
+  width: calc(100% - 200px);
+}
+
+.main__right-col {
+  width: 200px;
+  background-color: $background-dark;
+  min-height: 100vh;
+  position: fixed;
+  right: 0;
+  top: 0;
+  padding: 20px 0 20px 15px;
+}
