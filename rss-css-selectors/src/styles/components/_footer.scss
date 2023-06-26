@@ -1,3 +1,8 @@
+.footer {
+  z-index: 1;
+  background-color: rgba($background-dark, 0.6);
+}
+
 .footer__wrapper {
   display: flex;
   align-items: center;
@@ -11,8 +16,9 @@
   background-image: url(../assets/svg/rss.svg);
   background-size: contain;
   background-repeat: no-repeat;
+  opacity: 0.8;
   @extend %transition;
   &:hover {
-    opacity: 0.9;
+    opacity: 1;
   }
 }
