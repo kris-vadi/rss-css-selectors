@@ -2,7 +2,7 @@ import LevelsList from './levels-lIst';
 import LevelTask from './level-task';
 import { levels, Level } from './levels';
 
-//const CURRENT_LEVEL = 0;
+const CURRENT_LEVEL = 0;
 
 class App {
   levelsList: LevelsList;
@@ -12,13 +12,18 @@ class App {
   }
 
   public start(): void {
-    const level = document.querySelectorAll<HTMLLinkElement>('.level');
+    const levelsList = document.querySelectorAll<HTMLLinkElement>('.level');
+    const levelNumber: number = CURRENT_LEVEL;
 
-    level?.forEach((link) => this.handleClick(link));
+    this.loadLevel(levelNumber);
+    levelsList?.forEach((link) => this.handleClick(link));
   }
 
-  private loadLevel(): void {
-
+  private loadLevel(currentLevel: number): void {
+    const level: Level = levels[currentLevel];
+    const levelTask = new LevelTask(level);
+    
+    levelTask.addLevelTask();
   }
 
   private handleClick(link: HTMLLinkElement): void {
@@ -26,10 +31,8 @@ class App {
       const target = event.target as HTMLLinkElement;
       const levelNumberText: string | undefined = target.querySelector<HTMLSpanElement>('.level__number')?.innerText;
       const levelNumber = Number(levelNumberText);
-      const currentLevel: Level = levels[levelNumber - 1];
 
-      const levelTask = new LevelTask(currentLevel);
-      levelTask.addLevelTask();
+      this.loadLevel(levelNumber - 1);
     });
   }
 }
