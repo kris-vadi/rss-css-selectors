@@ -1,0 +1,20 @@
+.button {
+  width: 100%;
+  padding: 10px 0;
+  border: solid 1px $border;
+  background: transparent;
+  color: $text-light;
+  font-size: 1.5rem;
+  cursor: pointer;
+  @extend %transition;
+  &:hover {
+    background: $background;
+    color: $main-color;
+  }
+}
+
+@media screen and (max-width: $tablet-width) {
+  .button {
+    font-size: 1.3rem;
+  }
+}
