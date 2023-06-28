@@ -17,10 +17,10 @@ class LevelTask {
     });
 
     const taskHtml = `
-    <h2 class="level-task__header">${this.level.helpTitle}:</h2>
+    <h2 class="level-task__title">${this.level.helpTitle}:</h2>
     <div class="level-task__description">${this.level.doThis}</div>
     <span class="level-task__selector">${this.level.selectorName}</span>
-    <span class="level-task__syntax">${this.level.syntax}</span>
+    <div class="level-task__syntax">${this.level.syntax}</div>
     <div class="level-task__help">${this.level.help}</div>
     <h3>Examples:</h3>
     ${examples}

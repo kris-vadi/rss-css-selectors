@@ -19,3 +19,16 @@
   top: 0;
   padding: 20px 0 20px 15px;
 }
+
+
+@media screen and (max-width: $tablet-width) {
+  .main__left-col{
+    width: calc(100% - 95px);
+  }
+
+  .main__right-col {
+    width: 95px;
+    padding: 10px;
+    text-align: center;
+  }
+}

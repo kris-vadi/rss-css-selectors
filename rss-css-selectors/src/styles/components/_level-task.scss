@@ -1,26 +1,28 @@
-.level-task__header {
+.level-task__title {
   padding-bottom: 5px;
-  border-bottom: 1px solid $border;
+  border-bottom: 1px solid $main-color;
 }
 
 .level-task__description {
-  margin: 20px 0;
+  margin: 15px 0;
 }
 
 .level-task__selector {
-  font-weight: 100;
   font-size: 2.5rem;
-  color: $text-light;
+  color: $main-color;
+  margin-right: 8px;
+  line-height: 1.3;
 }
 
 .level-task__syntax {
+  display: inline-block;
   background: darken($background, 5%);
   padding: 5px 8px;
-  margin: 0 10px;
   font-size: 3rem;
   font-weight: 100;
   border-bottom: solid 2px $text-link;
   opacity: 0.8;
+  
 }
 
 .level-task__help {
