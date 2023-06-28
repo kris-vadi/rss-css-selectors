@@ -1,0 +1,45 @@
+.level-task__header {
+  padding-bottom: 5px;
+  border-bottom: 1px solid $border;
+}
+
+.level-task__description {
+  margin: 20px 0;
+}
+
+.level-task__selector {
+  font-weight: 100;
+  font-size: 2.5rem;
+  color: $text-light;
+}
+
+.level-task__syntax {
+  background: darken($background, 5%);
+  padding: 5px 8px;
+  margin: 0 10px;
+  font-size: 3rem;
+  font-weight: 100;
+  border-bottom: solid 2px $text-link;
+  opacity: 0.8;
+}
+
+.level-task__help {
+  margin: 25px 0;
+  font-style: italic;
+  font-size: 1.5rem;
+  line-height: 2rem;
+}
+
+.level-task__example {
+  font-size: 1.5rem;
+  margin-top: 10px;
+  padding-bottom: 10px;
+  border-bottom: 1px solid $border;
+  strong {
+    padding: 3px 6px;
+    margin: 0 2px;
+    font-weight: 400;
+    color: $text-light;
+    background: lighten($background-dark, 2%);
+  }
+}

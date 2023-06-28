@@ -13,7 +13,9 @@ class LevelsList {
 
     levels.forEach((level, index) => {
       const levelElement = `
-      <a><span class="levels-list__checkmark"></span><span class="levels-list__number">${index + 1}</span>${level.syntax}</a>
+      <a class="level">
+      <span class="level__checkmark"></span>
+      <span class="level__number">${index + 1}</span>${level.syntax}</a>
       `;
 
       levelList.innerHTML += levelElement;
