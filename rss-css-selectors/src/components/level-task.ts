@@ -12,7 +12,7 @@ class LevelTask {
     let examples = '';
     const levelTask = document.querySelector('.level-task') as HTMLDivElement;
 
-    this.level.examples.forEach((examle) => {
+    this.level.examples?.forEach((examle: string) => {
       examples += `<div class="level-task__example">${examle}</div>`;
     });
 

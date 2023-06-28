@@ -9,6 +9,10 @@
   gap: 10px;
 }
 
+.level {
+  display: block;
+}
+
 .level__checkmark {
   position: relative;
   display: inline-block;
@@ -20,11 +24,17 @@
   opacity: .55;
   border: solid 3px $text;
   border-width: 0 3px 3px 0;
+  pointer-events: none;
 }
 
 .level__number {
   font-weight: 600;
   margin-right: 10px;
+  pointer-events: none;
+}
+
+.level__text {
+  pointer-events: none;
 }
 
 @media screen and (max-width: $tablet-width) {
