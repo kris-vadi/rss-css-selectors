@@ -23,11 +23,15 @@ class App {
   private loadLevel(currentLevel: number): void {
     const level: Level = levels[currentLevel];
     const levelTask = new LevelTask(level);
-    const editor = new Editor(level.boardMarkup);
+    const editor = new Editor(level.boardMarkup, level.selector);
 
     levelTask.addLevelTask();
     levelTask.addAccordion();
     editor.addBoardMarkup();
+    editor.clickEnterButton();
+    editor.pressEnter();
+
+    
   }
 
   private handleClickLevel(link: HTMLLinkElement): void {
