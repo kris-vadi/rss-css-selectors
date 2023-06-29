@@ -76,3 +76,9 @@
   width: 23%;
   padding: 2px 3px;
 }
+
+@media screen and (max-width: 965px) {
+  .editor__input {
+    width: 100%;
+  }
+}
