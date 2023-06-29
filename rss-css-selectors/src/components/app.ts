@@ -26,6 +26,7 @@ class App {
     const editor = new Editor(level.boardMarkup);
 
     levelTask.addLevelTask();
+    levelTask.addAccordion();
     editor.addBoardMarkup();
   }
 
