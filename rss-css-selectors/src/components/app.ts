@@ -1,5 +1,6 @@
 import LevelsList from './levels-lIst';
 import LevelTask from './level-task';
+import Editor from './editor';
 import { levels, Level } from './levels';
 
 const CURRENT_LEVEL = 0;
@@ -16,17 +17,19 @@ class App {
     const levelNumber: number = CURRENT_LEVEL;
 
     this.loadLevel(levelNumber);
-    levelsList?.forEach((link) => this.handleClick(link));
+    levelsList?.forEach((link) => this.handleClickLevel(link));
   }
 
   private loadLevel(currentLevel: number): void {
     const level: Level = levels[currentLevel];
     const levelTask = new LevelTask(level);
-    
+    const editor = new Editor(level.boardMarkup);
+
     levelTask.addLevelTask();
+    editor.addBoardMarkup();
   }
 
-  private handleClick(link: HTMLLinkElement): void {
+  private handleClickLevel(link: HTMLLinkElement): void {
     link.addEventListener('click', (event: Event) => {
       const target = event.target as HTMLLinkElement;
       const levelNumberText: string | undefined = target.querySelector<HTMLSpanElement>('.level__number')?.innerText;

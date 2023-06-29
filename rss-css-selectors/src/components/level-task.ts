@@ -8,7 +8,7 @@ class LevelTask {
     this.addLevelTask();
   }
 
-  addLevelTask(): void {
+  public addLevelTask(): void {
     let examples = '';
     const levelTask = document.querySelector('.level-task') as HTMLDivElement;
 

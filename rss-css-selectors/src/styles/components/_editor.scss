@@ -1,0 +1,78 @@
+.editor {  
+  font-size: 1.4rem;
+  line-height: 1.5;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  margin: 0 auto;
+  border: solid 10px $background-dark;
+  border-radius: 4px;
+}
+
+.editor__pane {
+  display: grid;
+  grid-template-rows: 30px 1fr;
+  align-items: center;
+  border: solid 1px $border-dark;
+  &:first-child {
+    border-right: none;
+  }
+}
+
+.editor__window {
+  font-family: 'CourierNew', monospace;
+  font-size: 1.4rem;
+  line-height: 1.5;
+  display: grid;
+  grid-template-columns: 30px 1fr;
+  height: 100%;
+  border-top: solid 1px $border-dark;
+  background: $background-light;
+}
+
+.editor__window > * {
+  padding-top: 10px;
+}
+
+.editor__header {
+  padding: 0 10px;
+}
+
+.editor__nummbers-line {
+  background: $background-grey;
+  text-align: center;
+}
+
+.editor__window-dark > * {
+  background-color: lighten($background-dark, 1%);
+}
+
+.editor__window-dark {
+  .editor__nummbers-line {
+    border-right: solid 1px $border-dark;
+  }
+}
+
+.editor__css-view {
+  padding-left: 5px;
+}
+
+@keyframes input {
+  50% {
+    background: none;
+  }
+}
+
+.editor__input {
+  width: 70%;
+  background: $blue;
+  animation: input 1s infinite;
+  &::placeholder {
+    font-style: italic;
+  }
+}
+
+.editor__button {
+  background: $background-grey;
+  width: 23%;
+  padding: 2px 3px;
+}

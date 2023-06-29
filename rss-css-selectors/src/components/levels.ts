@@ -23,11 +23,10 @@ export const levels: Level[] = [
       '<strong>div p:first-child</strong> selects all first child <tag>p</tag> elements that are in a <tag>div</tag>.',
     ],
     boardMarkup:`
-    <plate />
     <plate>
-      <apple />
-      <apple />
-      <apple />
+      <apple></apple>
+      <apple></apple>
+      <apple></apple>
     </plate>
     `,
   },
@@ -43,11 +42,11 @@ export const levels: Level[] = [
       '<strong>div p:nth-child(2)</strong> selects the second <strong>p</strong> in every <strong>div</strong>',
     ],
     boardMarkup: `
-    <plate id="blue"/>
-    <plate id="blue"/>
-    <plate/>
-    <plate/>
-    <plate/>
+    <plate id="blue"></plate>
+    <plate id="blue"></plate>
+    <plate></plate>
+    <plate></plate>
+    <plate></plate>
     `,
   },
 ];
