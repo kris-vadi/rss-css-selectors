@@ -5,13 +5,14 @@
 .table__surface {
   display: flex;
   justify-content: center;
+  flex-wrap: wrap;
   align-items: center;
   background: $table;
   transform: perspective(1000px) rotateX(20deg);
   min-height: 120px;
   min-width: 100px;
   & > * {
-    margin: 0 5px;
+    margin: 5px;
   }
 }
 

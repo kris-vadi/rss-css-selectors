@@ -45,7 +45,7 @@ bento {
   min-height: 100px;
   background: $bento-gradient;
   transform: perspective(1000px) rotateX(20deg);
-  border-bottom: solid 4px #6e4611;
+  border-bottom: solid 6px #6e4611;
   border-right: solid 1px #6e4611;
   border-left: solid 1px #6e4611;
 }
@@ -59,6 +59,11 @@ orange {
   background-size: contain;
   background-position: center;
   background-repeat: no-repeat;
+  z-index: 2;
+  &.big {
+    width: 70px;
+    height: 70px;
+  }
 }
 
 apple { 
