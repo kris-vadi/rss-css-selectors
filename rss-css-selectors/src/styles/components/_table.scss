@@ -3,18 +3,25 @@
 }
 
 .table__surface {
-  border-bottom: 100px solid $table;
-  border-left: 50px solid transparent;
-  border-right: 50px solid transparent;
-  min-height: 100px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background: $table;
+  transform: perspective(1000px) rotateX(20deg);
+  min-height: 120px;
   min-width: 100px;
+  & > * {
+    margin: 0 5px;
+  }
 }
+
 .table__legs {
   display: flex;
   justify-content: space-between;
   border-top: 10px solid $table-dark;
   border-left: 10px solid transparent;
   border-right: 10px solid transparent;
+  margin-top: -3px;
 }
 
 .table__leg {

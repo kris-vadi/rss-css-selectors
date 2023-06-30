@@ -1,6 +1,7 @@
 import LevelsList from './levels-lIst';
 import LevelTask from './level-task';
 import Editor from './editor';
+import Table from './table';
 import { levels, Level } from './levels';
 
 const CURRENT_LEVEL = 0;
@@ -24,6 +25,7 @@ class App {
     const level: Level = levels[currentLevel];
     const levelTask = new LevelTask(level);
     const editor = new Editor(level.boardMarkup, level.selector);
+    const table = new Table(level);
 
     levelTask.addLevelTask();
     levelTask.addAccordion();
