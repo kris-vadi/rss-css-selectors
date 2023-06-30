@@ -14,6 +14,12 @@
   & > * {
     margin: 5px;
   }
+  & > * .dance,
+  & > *.dance {
+    transform-origin: bottom;
+    animation: dance 1s infinite;
+    animation-delay: 0.5s;
+  }
 }
 
 .table__legs {
@@ -30,4 +36,22 @@
     border-left: 4px solid transparent;
     border-right: 4px solid transparent;
     border-top: 10px solid $table-dark;
+}
+
+@keyframes dance {
+  0% {
+    transform: skew(1deg,0deg) scaleX(1);
+  }
+  10% {
+      transform: skew(1deg,0deg) scaleY(0.95);
+  }
+  50% {
+      transform: skew(-1deg,0deg) scaleX(1);
+  }
+  60% {
+      transform: skew(-1deg,0deg) scaleY(0.95);
+  }
+  100% {
+      transform: skew(1deg,0deg) scaleX(1);
+  }
 }

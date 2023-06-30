@@ -131,7 +131,7 @@ export const levels: Level[] = [
     selectorName: 'Nth Child Pseudo-selector',
     helpTitle: 'Select an element by its order in another element',
     doThis: 'Select the 4rd pear on the bento',
-    selector: 'bento:nth-child(4)',
+    selector: 'bento :nth-child(4)',
     syntax: ':nth-child(A)',
     help: 'Selects the <strong>nth</strong> (Ex: 1st, 3rd, 10th etc.) child element in another element.',
     examples: [
