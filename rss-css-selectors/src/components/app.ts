@@ -29,6 +29,7 @@ class App {
     this.clickEnterButton();
     this.pressEnter();
     this.clickResetProgressButton();
+    this.clickHelpButton();
   }
 
   private loadLevel(currentLevel: number): void {
@@ -178,12 +179,34 @@ class App {
   private clickResetProgressButton(): void {
     const resetButton = document.querySelector('.reset-button') as HTMLButtonElement;
 
-    resetButton.addEventListener('click', (event: Event): void => {
+    resetButton.addEventListener('click', (): void => {
       this.resetProgress();
       this.loadLevel(progress.currentLevel);
     });
   }
 
+  private typeAnswer = (): void => {
+    const input = document.querySelector('.editor__input') as HTMLInputElement;
+    const answer: string = levels[progress.currentLevel].selector;
+    const answerChars: Array<string> = answer.split('');
+    let i = 0;
+
+    const typeText = (): void => {
+      input.value += answerChars[i];
+      i += 1;
+      if (i < answerChars.length) {
+        delay(300).then(() => typeText());
+      }
+    };
+
+    typeText();
+  };
+
+  private clickHelpButton(): void {
+    const helpButton = document.querySelector('.editor__help') as HTMLButtonElement;
+
+    helpButton.addEventListener('click', this.typeAnswer);
+  }
 }
 
 export default App;

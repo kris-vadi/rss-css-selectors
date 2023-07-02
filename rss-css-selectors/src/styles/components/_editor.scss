@@ -71,10 +71,24 @@
   }
 }
 
-.editor__button {
-  background: $background-grey;
+.editor__button,
+.editor__help {
   width: 23%;
   padding: 2px 3px;
+  @extend %transition;
+}
+
+.editor__button {
+  background: $background-grey;
+}
+
+.editor__help {
+  background: $main-color;
+  color: $background-light;
+  margin-top: 15px;
+  &:hover {
+    background: lighten($main-color, 5%);
+  }
 }
 
 @media screen and (max-width: 965px) {

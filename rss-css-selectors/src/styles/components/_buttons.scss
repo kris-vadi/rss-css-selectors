@@ -1,4 +1,4 @@
-.button {
+.reset-button {
   width: 100%;
   padding: 10px 0;
   border: solid 1px $border;
@@ -14,7 +14,7 @@
 }
 
 @media screen and (max-width: $tablet-width) {
-  .button {
+  .reset-button {
     font-size: 1.3rem;
   }
 }
