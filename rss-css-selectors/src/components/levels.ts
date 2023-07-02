@@ -1,13 +1,4 @@
-export interface Level {
-  selectorName: string;
-  helpTitle: string;
-  doThis: string;
-  selector: string;
-  syntax: string;
-  help: string;
-  examples: string[];
-  boardMarkup: string;
-} 
+import { Level } from './types';
 
 export const levels: Level[] = [
   {

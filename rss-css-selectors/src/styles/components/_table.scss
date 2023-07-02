@@ -38,6 +38,13 @@
     border-top: 10px solid $table-dark;
 }
 
+.table__win-message {
+  font-size: 4rem;
+  font-weight: 600;
+  color: $win-text;
+  text-shadow: $win-text-shadow;
+}
+
 @keyframes dance {
   0% {
     transform: skew(1deg,0deg) scaleX(1);

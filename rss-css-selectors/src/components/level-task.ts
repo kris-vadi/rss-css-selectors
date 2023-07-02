@@ -1,4 +1,4 @@
-import { Level } from './levels';
+import { Level } from './types';
 
 class LevelTask {
   level: Level;

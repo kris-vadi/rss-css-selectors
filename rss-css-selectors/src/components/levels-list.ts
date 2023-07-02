@@ -1,14 +1,16 @@
-import { Level, levels } from './levels';
+import { levels } from './levels';
+import { Level } from './types';
 
 class LevelsList {
   levelsList: Level[];
+  
 
   constructor() {
     this.levelsList = levels;
     this.createLevelsList();
   }
-
-  createLevelsList():void {
+  
+  public createLevelsList():void {
     const levelList = document.querySelector('.levels-list') as HTMLDivElement;
 
     levels.forEach((level, index) => {

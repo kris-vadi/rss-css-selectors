@@ -14,6 +14,16 @@
   display: block;
 }
 
+.level.completed {
+  .level__checkmark {
+    border-color: $checked;
+  }
+}
+
+.level.current {
+  color: $text-light;
+}
+
 .level__checkmark {
   position: relative;
   display: inline-block;

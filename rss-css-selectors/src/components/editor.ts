@@ -1,43 +1,57 @@
 class Editor {
   boardMarkup: string;
 
-  selector: string;
-
-  constructor(boardMarkup: string, selector: string) {
+  constructor(boardMarkup: string) {
     this.boardMarkup = boardMarkup;
-    this.selector = selector;
   }
 
   public addBoardMarkup():void {
     const markup = document.querySelector('.editor__markup') as HTMLDivElement;
+    const input = document.querySelector('.editor__input') as HTMLInputElement;
     
-    markup.innerHTML = this.boardMarkup;
+    input.value = '';
+    markup.innerHTML = '';
+    markup.append(this.boardMarkup);
+    this.getMarkup();
   }
 
-  private checkInputResult(): boolean {
-    const input = document.querySelector('.editor__input') as HTMLInputElement;
-    const inputRule: string = input.value.trim();
-
-    return (inputRule === this.selector);
+  private getMarkup(): HTMLDivElement {
+    const markup = document.querySelector('.table__surface') as HTMLDivElement;
+      
+    const newMarkup: HTMLDivElement | undefined = this.wrapTagsInDiv(markup);
+    return (newMarkup) ? newMarkup : markup;
   }
 
-  public clickEnterButton(): void {
-    const button = document.querySelector('.editor__button') as HTMLButtonElement;
+  private wrapTagsInDiv(markup: HTMLDivElement): HTMLDivElement | undefined {
+    const hasChildren: boolean = (markup.children.length > 0) ? true : false;
+    const regexp = /<[^<>]+>/g;
+    //console.log(markup);
 
-    button.addEventListener('click', () => {
-      this.checkInputResult();
-    });
-  }
+    if (hasChildren) {
+      const markupChildrens: HTMLCollection = markup.children;
+      //console.log(markupChildrens);
+      
+      // for(let i = 0; i < markupChildrens.length; i += 1) {
+      //   const el = markupChildrens[i];
+      //   console.log(el);
+      //   const newDiv = document.createElement('div');
+      //   const tags: string[] | null= el.outerHTML.match(regexp);
+      //   const openTag: string = (tags) ? tags[0] : '';
+      //   const closeTag: string = (tags) ? tags[1] : '';
+      //   const innerEl: HTMLDivElement | undefined = this.wrapTagsInDiv(el as HTMLDivElement);
 
-  public pressEnter(): void {
-    const input = document.querySelector('.editor__input') as HTMLInputElement;
+      //   newDiv.append(openTag);
+      //   //innerEl && newDiv.append(innerEl);
+      //   newDiv.append(closeTag);
+        
+      //   markup.append(newDiv);
+      // }
 
-    input.addEventListener('keypress', (event: KeyboardEvent) => {
-      event.stopPropagation();
-      if (event.key === 'Enter') {
-        this.checkInputResult();
-      }
-    });
+      return markup;
+    } 
+
+    if (!hasChildren) return markup;
+
   }
 }
 
