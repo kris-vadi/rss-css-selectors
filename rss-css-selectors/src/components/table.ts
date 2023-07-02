@@ -5,7 +5,6 @@ class Table {
 
   constructor(level: Level) {
     this.level = level;
-    this.addElementsOnTable();
   }
 
   public winMessageOnTable(): void {
@@ -18,7 +17,7 @@ class Table {
     tableSurface.append(message);
   }
 
-  private addElementsOnTable(): void {
+  public addElementsOnTable(): void {
     const tableSurface = document.querySelector('.table__surface') as HTMLDivElement;
 
     tableSurface.innerHTML = this.level.boardMarkup;

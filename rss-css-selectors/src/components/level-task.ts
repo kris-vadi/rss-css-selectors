@@ -51,6 +51,11 @@ class LevelTask {
       toggleClass(panel);
     });
   }
+
+  static hideLevelTask(): void {
+    const levelTask = document.querySelector('.level-task') as HTMLDivElement;
+    levelTask.innerHTML = '';
+  }
 }
 
 export default LevelTask;

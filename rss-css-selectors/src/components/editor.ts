@@ -7,12 +7,18 @@ class Editor {
 
   public addBoardMarkup():void {
     const markup = document.querySelector('.editor__markup') as HTMLDivElement;
-    const input = document.querySelector('.editor__input') as HTMLInputElement;
     
-    input.value = '';
-    markup.innerHTML = '';
+    Editor.clearEditor();
     markup.append(this.boardMarkup);
     this.getMarkup();
+  }
+  
+  static clearEditor():void {
+    const markup = document.querySelector('.editor__markup') as HTMLDivElement;
+    const input = document.querySelector('.editor__input') as HTMLInputElement;
+
+    input.value = '';
+    markup.innerHTML = '';
   }
 
   private getMarkup(): HTMLDivElement {

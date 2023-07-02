@@ -28,17 +28,16 @@ class App {
     currentLevelsList?.forEach((link) => this.сlickLevelOnLevelsList(link));
     this.clickEnterButton();
     this.pressEnter();
+    this.clickResetProgressButton();
   }
 
   private loadLevel(currentLevel: number): void {
-    console.log(`Заргужаем уровень ${currentLevel}`);
     const isWin: boolean | null = this.checkIsWin();
-    console.log(isWin);
+
     if (isWin) {
       this.endGame();
     } else if (isWin === false) {
       const level: Level = levels[currentLevel];
-      console.log(level);
       const levelTask = new LevelTask(level);
       const editor = new Editor(level.boardMarkup);
       const table = new Table(level);
@@ -47,6 +46,7 @@ class App {
       this.addCurrentClassOnLevel(currentLevel);
       levelTask.addLevelTask();
       levelTask.addAccordion();
+      table.addElementsOnTable();
       editor.addBoardMarkup();
       this.markCompletedLevels(progress.passedLevels);
     }
@@ -106,8 +106,6 @@ class App {
       }
       if (progress.passedLevels.length < levels.length) {
         progress.currentLevel = progress.failedLevels[0];
-        console.log(`непройденные ур ${progress.currentLevel}`);
-        console.log(progress);
         this.loadLevel(progress.currentLevel);
         return null;
       }
@@ -119,13 +117,16 @@ class App {
   private endGame(): void {
     const table = new Table(levels[0]);
     table.winMessageOnTable();
-
-    this.addCurrentClassOnLevel();
     this.markCompletedLevels(progress.passedLevels);
+    this.resetProgress();
+    LevelTask.hideLevelTask();
   }
 
   private resetProgress(): void {
-
+    progress.currentLevel = 0;
+    progress.failedLevels = [];
+    progress.passedLevels = [];
+    Editor.clearEditor();
   }
 
   private winLevel(): void {
@@ -147,17 +148,22 @@ class App {
 
   private markCompletedLevels(passedLevels: number[]): void {
     const levelList = document.querySelectorAll<HTMLLinkElement>('.level');
-
-    passedLevels.forEach((index) => {
-      levelList[index].classList.add('completed');
-    });
+    if (passedLevels.length > 0) {
+      passedLevels.forEach((index: number): void => {
+        levelList[index].classList.add('completed');
+      });
+    } else {
+      levelList.forEach((level: HTMLLinkElement): void => {
+        level.classList.remove('completed');
+      });
+    }
   }
 
   private addCurrentClassOnLevel(levelIndex?: number): void {
     const levelList = document.querySelectorAll<HTMLLinkElement>('.level');
     const removeClass = (): void => levelList?.forEach((el) => el.classList.remove('current'));
     const addClass = (): void  => {
-      if (levelIndex) { 
+      if (levelIndex || levelIndex === 0) { 
         levelList[levelIndex].classList.add('current');
       }
     };
@@ -167,6 +173,15 @@ class App {
     } else {
       removeClass();
     }
+  }
+
+  private clickResetProgressButton(): void {
+    const resetButton = document.querySelector('.reset-button') as HTMLButtonElement;
+
+    resetButton.addEventListener('click', (event: Event): void => {
+      this.resetProgress();
+      this.loadLevel(progress.currentLevel);
+    });
   }
 
 }
