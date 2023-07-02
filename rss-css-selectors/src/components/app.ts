@@ -6,12 +6,13 @@ import { levels } from './levels';
 import { Level, Progress } from './types';
 
 const delay = async (ms: number): Promise<void> => new Promise(resolve => setTimeout(resolve, ms));
-const progress: Progress = {
+const blankProgress: Progress = {
   currentLevel: 0,
   passedLevels: [],
   failedLevels: [],
 };
-localStorage.setItem('userProgress', JSON.stringify(progress));
+const storageProgress: string | null = localStorage.getItem('userProgress');
+const progress : Progress = (storageProgress) ? JSON.parse(storageProgress) : blankProgress;
 
 class App {
   levelsList: LevelsList;
@@ -127,6 +128,7 @@ class App {
     progress.currentLevel = 0;
     progress.failedLevels = [];
     progress.passedLevels = [];
+    localStorage.setItem('userProgress', JSON.stringify(progress));
     Editor.clearEditor();
   }
 
@@ -137,6 +139,7 @@ class App {
     while (progress.passedLevels.includes(progress.currentLevel)) {
       progress.currentLevel += 1;
     }
+    localStorage.setItem('userProgress', JSON.stringify(progress));
     delay(700).then(() => this.loadLevel(progress.currentLevel));
   }
 
