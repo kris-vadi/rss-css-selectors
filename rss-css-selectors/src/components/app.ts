@@ -95,9 +95,11 @@ class App {
 
   private checkInputResult(): boolean {
     const input = document.querySelector('.editor__input') as HTMLInputElement;
-    const inputRule: string = input.value.trim();
+    const inputRule: string = Editor.removeSpaces(input.value);
+    const correctAnswer: string = Editor.removeSpaces(levels[progress.currentLevel].selector);
+
     
-    return (inputRule === levels[progress.currentLevel].selector);
+    return (inputRule === correctAnswer);
   }
 
   private checkIsWin(): boolean | null {
