@@ -139,4 +139,66 @@ export const levels: Level[] = [
     </bento>
     `,
   },
+  {
+    selectorName: 'Empty Selector',
+    helpTitle: "Select elements that don't have children",
+    doThis : 'Select the empty plates',
+    selector : 'plate:empty',
+    syntax: ':empty',
+    help : "Selects elements that don't have any other elements inside of them.",
+    examples : [
+      '<strong>div:empty</strong> selects all empty <tag>div</tag> elements.',
+    ],
+    boardMarkup:`
+    <plate></plate>
+    <plate id="blue">
+      <orange></orange>
+    </plate>
+    <bento></bento>
+    <plate></plate>
+    `,
+  },
+  {
+    selectorName : 'Comma Combinator',
+    helpTitle: 'Combine, selectors, with... commas!',
+    doThis : 'Select all apples and pears',
+    selector : 'apple,pear',
+    syntax : 'A, B',
+    help : 'Thanks to Shatner technology, this selects all <strong>A</strong> and <strong>B</strong> elements. You can combine any selectors this way, and you can specify more than two.',
+    examples: [
+      '<strong>p, .fun</strong> selects all <tag>p</tag> elements as well as all elements with <strong>class="fun"</strong>',
+      '<strong>a, p, div</strong> selects all <tag>a</tag>, <tag>p</tag> and <tag>div</tag> elements',
+    ],
+    boardMarkup : `
+    <pear class="big"></pear>
+    <apple></apple>
+    <plate id="blue">
+      <apple></apple>
+    </plate>
+    <bento>
+      <pear></pear>
+    </bento>
+    <orange></orange>
+    `,
+  },
+  {
+    selectorName: 'Last of Type Selector',
+    helpTitle: 'Select the last element of a specific type',
+    doThis : 'Select the last pear and orange',
+    selector : '.big:last-of-type',
+    syntax: ':last-of-type',
+    help : 'Selects each last element of that type within another element. Remember type refers the kind of tag, so <tag>p</tag> and <tag>span</tag> are different types. <br><br> I wonder if this is how the last dinosaur was selected before it went extinct.',
+    examples : [
+      '<strong>div:last-of-type</strong> selects the last <tag>div</tag> in every element.',
+      '<strong>p span:last-of-type</strong> selects the last <tag>span</tag> in every <tag>p</tag>.',
+    ],
+    boardMarkup : `
+    <pear class="big"></pear>
+    <pear class="big"></pear>
+    <apple></apple>
+    <plate id="blue"></plate>
+    <orange class="big"></orange>
+    <orange class="big"></orange>
+    `,
+  },
 ];
