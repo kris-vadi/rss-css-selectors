@@ -1,5 +1,17 @@
 .table {
   margin-bottom: 10px;
+  width: 87%;
+}
+
+@media screen and (max-width: $laptop-width) {
+  .table {
+    width: 95%;
+  }
+}
+@media screen and (max-width: $tablet-width) {
+  .table {
+    width: 100%;
+  }
 }
 
 .table__surface {

@@ -7,10 +7,10 @@ class Editor {
 
   public addBoardMarkup():void {
     const markup = document.querySelector('.editor__markup') as HTMLDivElement;
-    
+    const divElement = document.createElement('div');
     Editor.clearEditor();
-    markup.append(this.boardMarkup);
-    this.getMarkup();
+    divElement.append(this.getMarkup());
+    markup.append(divElement);
   }
   
   static clearEditor():void {
@@ -21,43 +21,36 @@ class Editor {
     markup.innerHTML = '';
   }
 
-  private getMarkup(): HTMLDivElement {
+  private getMarkup(): HTMLElement {
     const markup = document.querySelector('.table__surface') as HTMLDivElement;
       
-    const newMarkup: HTMLDivElement | undefined = this.wrapTagsInDiv(markup);
+    const newMarkup: HTMLElement | undefined = this.wrapTagsInDiv(markup);
     return (newMarkup) ? newMarkup : markup;
   }
 
-  private wrapTagsInDiv(markup: HTMLDivElement): HTMLDivElement | undefined {
+  private wrapTagsInDiv(markup: HTMLElement): HTMLElement | undefined {
     const hasChildren: boolean = (markup.children.length > 0) ? true : false;
-    const regexp = /<[^<>]+>/g;
-    //console.log(markup);
+    const wrapper = document.createElement('div') as HTMLElement;
 
     if (hasChildren) {
-      const markupChildrens: HTMLCollection = markup.children;
-      //console.log(markupChildrens);
-      
-      // for(let i = 0; i < markupChildrens.length; i += 1) {
-      //   const el = markupChildrens[i];
-      //   console.log(el);
-      //   const newDiv = document.createElement('div');
-      //   const tags: string[] | null= el.outerHTML.match(regexp);
-      //   const openTag: string = (tags) ? tags[0] : '';
-      //   const closeTag: string = (tags) ? tags[1] : '';
-      //   const innerEl: HTMLDivElement | undefined = this.wrapTagsInDiv(el as HTMLDivElement);
+      const markupChildren: HTMLCollection = markup.children;
 
-      //   newDiv.append(openTag);
-      //   //innerEl && newDiv.append(innerEl);
-      //   newDiv.append(closeTag);
-        
-      //   markup.append(newDiv);
-      // }
+      for (const node of markupChildren) {
+        const newElement = document.createElement('div') as HTMLElement;
 
-      return markup;
-    } 
-
-    if (!hasChildren) return markup;
-
+        newElement.append(`<${node.tagName.toLocaleLowerCase()}>`);
+        const innerElement: HTMLElement | undefined = this.wrapTagsInDiv(node as HTMLElement);
+        if (innerElement !== undefined) {
+          newElement.append(innerElement);
+        }
+        newElement.append(`</${node.tagName.toLocaleLowerCase()}>`);
+        wrapper.append(newElement);
+      }
+    } else {
+      return undefined;
+    }
+    
+    return wrapper;
   }
 }
 

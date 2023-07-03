@@ -91,6 +91,12 @@
   }
 }
 
+.editor__markup {
+  div > div {
+    padding-left: 10px;
+  }
+}
+
 @media screen and (max-width: 965px) {
   .editor__input {
     width: 100%;

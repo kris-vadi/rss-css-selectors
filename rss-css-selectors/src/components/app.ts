@@ -61,6 +61,7 @@ class App {
       const levelNumber = Number(levelNumberText);
 
       progress.currentLevel = levelNumber - 1;
+      localStorage.setItem('userProgress', JSON.stringify(progress));
       this.loadLevel(levelNumber - 1);
     });
   }
