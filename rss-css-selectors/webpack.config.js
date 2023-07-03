@@ -1,17 +1,18 @@
 const path = require('path');
 const { CleanWebpackPlugin } = require('clean-webpack-plugin');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
+const EslintPlugin = require('eslint-webpack-plugin');
 
 module.exports = {
   mode: 'development',
   entry: path.resolve(__dirname, './src/index'),
   output: {
-    filename: 'script.js',
+    filename: 'index.js',
     path: path.resolve(__dirname, '../dist'),
-    publicPath: '/'
+    publicPath: './'
   },
   resolve: {
-    extensions: ['.tsx', '.ts', '.js'],
+    extensions: ['.ts', '.js'],
   },
   plugins: [
     new HtmlWebpackPlugin({
@@ -20,6 +21,9 @@ module.exports = {
       inject: 'body'
     }),
     new CleanWebpackPlugin(),
+    new EslintPlugin({ 
+        extensions: 'ts'
+    })
   ],
   devServer: {
     static: path.resolve(__dirname, '../dist'),
@@ -33,7 +37,7 @@ module.exports = {
         exclude: /node_modules/,
       },
       {
-        test: /\.s[ac]ss$/i,
+        test: /\.(scss|css)$/i,
         use: [
           "style-loader",
           "css-loader",

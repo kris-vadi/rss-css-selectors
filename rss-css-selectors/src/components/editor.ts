@@ -15,18 +15,12 @@ class Editor {
 
   public addMouseEventOnMarkup(): void {
     const editorMarkup = document.querySelector('.editor__markup') as HTMLDivElement;
-    const tableSurface = document.querySelector('.table__surface') as HTMLDivElement;
 
     editorMarkup.addEventListener('mouseover', (event: Event): void => {
       const target = event.target as HTMLDivElement;
 
       if (target.classList.length === 0 && target.tagName.toLocaleLowerCase() === 'div') {
         target.classList.add('highlight');
-
-        const el = document.querySelector('.highlight') as HTMLElement;
-        const index = el.parentNode ? [...el.parentNode.children].indexOf(el) : -1;
-
-        this.findElementOnTable(tableSurface, target.innerText, index);
       }
     });
 
@@ -38,28 +32,6 @@ class Editor {
       }
       
     });
-  }
-
-  private findElementOnTable(element: Element, text: string, index: number): void {
-    const childrenElements: HTMLCollection = element.children;
-    const removeSpaces = (str: string): string => {
-      return str.split('').filter((el) => el != ' ').join('');
-    };
-    text = removeSpaces(text);
-
-    for (let i = 0; i < childrenElements.length; i += 1) {
-      const el = childrenElements[i];
-      let elementHtml = element.outerHTML.replace('class="dance"', '').replace('dance', '').replace('class=""', '');
-      elementHtml = removeSpaces(elementHtml);
-
-      if (elementHtml === text && index === i) {
-        el.classList.add('backlight');
-      }
-
-      if (el.hasChildNodes()) {
-        this.findElementOnTable(element, text, index);
-      }
-    }
   }
 
   static clearEditor():void {
