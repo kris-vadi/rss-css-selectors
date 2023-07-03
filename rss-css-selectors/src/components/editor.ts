@@ -44,19 +44,21 @@ class Editor {
     const childrenElements: HTMLCollection = element.children;
     text = Editor.removeSpaces(text);
 
-    // for (let i = 0; i < childrenElements.length; i += 1) {
-    //   const el = childrenElements[i];
-    //   let elementHtml = element.outerHTML.replace('class="dance"', '').replace('dance', '').replace('class=""', '');
-    //   elementHtml = removeSpaces(elementHtml);
+    if (childrenElements.length === 0) return;
 
-    //   if (elementHtml === text && index === i) {
-    //     el.classList.add('backlight');
-    //   }
+    for (let i = 0; i < childrenElements.length; i += 1) {
+      const currentElement = childrenElements[i];
+      let currentHtml = currentElement.outerHTML.replace('class="dance"', '').replace('dance', '').replace('class=""', '');
+      currentHtml = Editor.removeSpaces(currentHtml);
 
-    //   if (el.hasChildNodes()) {
-    //     this.findElementOnTable(element, text, index);
-    //   }
-    // }
+      if (currentHtml === text && index === i) {
+        currentElement.classList.add('backlight');
+      }
+
+      if (currentElement.hasChildNodes()) {
+        this.findElementOnTable(currentElement, text, index);
+      }
+    }
   }
 
   static clearEditor():void {
@@ -69,7 +71,7 @@ class Editor {
 
   static removeSpaces(str: string): string {
     return str.trim().split('').filter((el) => el != ' ').join('');
-  };
+  }
 
   private getMarkup(): HTMLElement {
     const htmlElement = document.createElement('div') as HTMLDivElement;
@@ -89,6 +91,7 @@ class Editor {
       for (const node of markupElementChildren) {
         if (markupElementChildren.length > 1) {
           const newElement = document.createElement('div') as HTMLElement;
+
           this.appendElement(node, newElement);
           wrapper.append(newElement);
         }
@@ -105,8 +108,13 @@ class Editor {
   }
 
   private appendElement(node: Element, element: HTMLElement): void {
+    let openTag = '';
+
     if (node.classList.length > 0) {
-      const openTag = `<${node.tagName.toLocaleLowerCase()} class="${node.classList}">`;
+      openTag = `<${node.tagName.toLocaleLowerCase()} class="${node.classList}">`;
+      element.append(openTag);
+    } else if (node.id) {
+      openTag = `<${node.tagName.toLocaleLowerCase()} id="${node.id}">`;
       element.append(openTag);
     } else {
       element.append(`<${node.tagName.toLocaleLowerCase()}>`);
