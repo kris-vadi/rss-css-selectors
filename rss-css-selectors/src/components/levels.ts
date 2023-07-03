@@ -110,7 +110,7 @@ export const levels: Level[] = [
       '<strong>p:first-child</strong> selects all first child <tag>p</tag> elements.',
       '<strong>div p:first-child</strong> selects all first child <tag>p</tag> elements that are in a <tag>div</tag>.',
     ],
-    boardMarkup:`
+    boardMarkup: `
     <bento>
       <pear></pear>
       <pear></pear>

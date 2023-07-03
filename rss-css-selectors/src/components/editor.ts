@@ -7,10 +7,9 @@ class Editor {
 
   public addBoardMarkup():void {
     const markup = document.querySelector('.editor__markup') as HTMLDivElement;
-    const divElement = document.createElement('div');
+    const newMarkup = this.getMarkup();
     Editor.clearEditor();
-    divElement.append(this.getMarkup());
-    markup.append(divElement);
+    markup.append(newMarkup);
   }
   
   static clearEditor():void {
@@ -22,34 +21,48 @@ class Editor {
   }
 
   private getMarkup(): HTMLElement {
-    const markup = document.querySelector('.table__surface') as HTMLDivElement;
-      
-    const newMarkup: HTMLElement | undefined = this.wrapTagsInDiv(markup);
-    return (newMarkup) ? newMarkup : markup;
+    const htmlElement = document.createElement('div') as HTMLDivElement;
+    htmlElement.innerHTML = this.boardMarkup;
+    const newElement = this.wrapTagsInDiv(htmlElement);
+
+    return (newElement) ? newElement : htmlElement;
   }
 
-  private wrapTagsInDiv(markup: HTMLElement): HTMLElement | undefined {
-    const hasChildren: boolean = (markup.children.length > 0) ? true : false;
+  private wrapTagsInDiv(htmlMarkupElement: HTMLElement): HTMLElement | undefined {
+    const hasChildren: boolean = (htmlMarkupElement.children.length > 0) ? true : false;
     const wrapper = document.createElement('div') as HTMLElement;
+    const appendElement = (node: Element, element: HTMLElement): void => {
+      if (node.classList.length > 0) {
+        const openTag = `<${node.tagName.toLocaleLowerCase()} class="${node.classList}">`;
+        element.append(openTag);
+      } else {
+        element.append(`<${node.tagName.toLocaleLowerCase()}>`);
+      }
+      const innerElement: HTMLElement | undefined = this.wrapTagsInDiv(node as HTMLElement);
+      if (innerElement !== undefined) {
+        element.append(innerElement);
+      }
+      element.append(`</${node.tagName.toLocaleLowerCase()}>`);
+    };
 
     if (hasChildren) {
-      const markupChildren: HTMLCollection = markup.children;
+      const markupElementChildren: HTMLCollection = htmlMarkupElement.children;
 
-      for (const node of markupChildren) {
-        const newElement = document.createElement('div') as HTMLElement;
-
-        newElement.append(`<${node.tagName.toLocaleLowerCase()}>`);
-        const innerElement: HTMLElement | undefined = this.wrapTagsInDiv(node as HTMLElement);
-        if (innerElement !== undefined) {
-          newElement.append(innerElement);
+      for (const node of markupElementChildren) {
+        if (markupElementChildren.length > 1) {
+          const newElement = document.createElement('div') as HTMLElement;
+          appendElement(node, newElement);
+          wrapper.append(newElement);
         }
-        newElement.append(`</${node.tagName.toLocaleLowerCase()}>`);
-        wrapper.append(newElement);
+        if (markupElementChildren.length === 1) {
+          appendElement(node, wrapper);
+        }
       }
+      
     } else {
       return undefined;
     }
-    
+
     return wrapper;
   }
 }
