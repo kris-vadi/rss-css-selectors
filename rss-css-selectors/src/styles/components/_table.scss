@@ -57,6 +57,11 @@
   text-shadow: $win-text-shadow;
 }
 
+.backlight {
+  box-shadow: 0 0 0 3px #fffefe54;
+  border-radius: 35px;
+}
+
 @keyframes dance {
   0% {
     transform: skew(1deg,0deg) scaleX(1);
