@@ -22,7 +22,7 @@ class Table {
 
     tableSurface.innerHTML = this.level.boardMarkup;
     this.shakeTargetElements();
-    this.addIdNumber(tableSurface, 0);
+    this.addDataNumber(tableSurface, 0);
   }
 
   private shakeTargetElements(): void {
@@ -32,15 +32,15 @@ class Table {
     elements.forEach((el) => el.classList.add('dance'));
   }
 
-  private addIdNumber(element: Element, index: number): number {
+  private addDataNumber(element: Element, index: number): number {
     const childrens = element.children as HTMLCollection;
     for (let i = 0; i < childrens.length; i += 1) {
       const el = childrens[i];
-      el.id = `${index}`;
+      el.setAttribute('num', `${index}`);
 
       if (el.hasChildNodes()) {
         index += 1;
-        const newIntex = this.addIdNumber(el, index);
+        const newIntex = this.addDataNumber(el, index);
         index = newIntex + 1;
       } else {
         index += 2;

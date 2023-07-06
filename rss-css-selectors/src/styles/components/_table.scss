@@ -1,6 +1,7 @@
 .table {
   margin-bottom: 10px;
   width: 87%;
+  position: relative;
 }
 
 @media screen and (max-width: $laptop-width) {
@@ -45,9 +46,9 @@
 
 .table__leg {
   width: 20px;
-    border-left: 4px solid transparent;
-    border-right: 4px solid transparent;
-    border-top: 10px solid $table-dark;
+  border-left: 4px solid transparent;
+  border-right: 4px solid transparent;
+  border-top: 10px solid $table-dark;
 }
 
 .table__win-message {

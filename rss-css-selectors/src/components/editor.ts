@@ -24,6 +24,7 @@ class Editor {
 
   private addMoueOutEvent(elements: NodeListOf<HTMLElement>): void {
     const tableElements = document.querySelectorAll<HTMLElement>('.table__surface *');
+    const tooltip = document.querySelector<HTMLElement>('.tooltip');
 
     elements.forEach((element) => {
       element.addEventListener('mouseout', (event: Event): void => {
@@ -35,6 +36,7 @@ class Editor {
         tableElements.forEach((el) => {
           el.classList.remove('selected');
         });
+        tooltip?.classList.remove('visible');
       });
     });
   }
@@ -50,22 +52,33 @@ class Editor {
     }
   }
 
+  private showTooltip(elemenet: string): void {
+    const tooltip = document.querySelector('.tooltip') as HTMLDivElement;
+
+    tooltip.innerHTML = '';
+    tooltip.append(elemenet);
+    tooltip.classList.add('visible');
+  }
+
   private addClassOnTaggetElements(i: number, element: HTMLElement, elements: NodeListOf<HTMLElement>): void {
     const table = document.querySelector('.table__surface') as HTMLElement;
     const elementText: string | null = element.textContent;
+    let openTag: string | null;
+    let closeTag: string | null;
     const regex = /<|>|\//ig;
 
     if (elementText && elementText.includes('</')) {
-      const openTag: string | null = this.findOpenTag(i, elements);
+      openTag = this.findOpenTag(i, elements);
       const tag = openTag?.replace(regex, '');
       if (tag) this.findMatchingElement(tag, i - 1, table);
     } else {
-      const closeTag = this.findCloseTag(i, elements);
+      closeTag = this.findCloseTag(i, elements);
       const tag = closeTag?.replace(regex, '');
       if (tag) {
         this.findMatchingElement(tag, i, table);
       }
     }
+
   }
 
   private getTextContent(i: number, elements: NodeListOf<HTMLElement>): string | null {
@@ -105,11 +118,13 @@ class Editor {
 
     for (let i = 0; i < tableElements.length; i += 1) {
       const currentElement = tableElements[i] as HTMLElement;
-      const currentId: string = currentElement.id;
-      const id: number = parseInt(currentId);
+      const currentDataNum: string | null = currentElement.getAttribute('num');
+      const id: number = (currentDataNum) ? parseInt(currentDataNum) : i;
 
       if (currentElement.tagName.toLocaleLowerCase() === tag && index === id) {
         currentElement.classList.add('selected');
+        const currentId: string = (currentElement.id) ? ` id="${currentElement.id}"` : '';
+        this.showTooltip(`<${tag}${currentId}></${tag}>`);
       }
 
       if (currentElement.hasChildNodes()) {
