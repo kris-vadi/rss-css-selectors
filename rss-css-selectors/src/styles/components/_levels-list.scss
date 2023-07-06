@@ -20,6 +20,12 @@
   }
 }
 
+.level.completed-with-help {
+  .level__checkmark {
+    border-color: $yellow;
+  }
+}
+
 .level.current {
   color: $text-light;
 }

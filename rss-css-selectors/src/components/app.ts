@@ -10,6 +10,7 @@ const blankProgress: Progress = {
   currentLevel: 0,
   passedLevels: [],
   failedLevels: [],
+  passedWithHelpLevels: [],
 };
 const storageProgress: string | null = localStorage.getItem('userProgress');
 const progress : Progress = (storageProgress) ? JSON.parse(storageProgress) : blankProgress;
@@ -51,6 +52,7 @@ class App {
       table.addElementsOnTable();
       editor.addBoardMarkup();
       this.markCompletedLevels(progress.passedLevels);
+      this.markCompletedWithHelpLevels(progress.passedWithHelpLevels);
     }
   }
 
@@ -123,6 +125,7 @@ class App {
     const table = new Table(levels[0]);
     table.winMessageOnTable();
     this.markCompletedLevels(progress.passedLevels);
+    this.markCompletedWithHelpLevels(progress.passedWithHelpLevels);
     this.resetProgress();
     LevelTask.hideLevelTask();
   }
@@ -131,6 +134,7 @@ class App {
     progress.currentLevel = 0;
     progress.failedLevels = [];
     progress.passedLevels = [];
+    progress.passedWithHelpLevels = [];
     localStorage.setItem('userProgress', JSON.stringify(progress));
     Editor.clearEditor();
   }
@@ -155,13 +159,26 @@ class App {
 
   private markCompletedLevels(passedLevels: number[]): void {
     const levelList = document.querySelectorAll<HTMLLinkElement>('.level');
-    if (passedLevels.length > 0) {
+    if (passedLevels && passedLevels.length > 0) {
       passedLevels.forEach((index: number): void => {
         levelList[index].classList.add('completed');
       });
     } else {
       levelList.forEach((level: HTMLLinkElement): void => {
         level.classList.remove('completed');
+      });
+    }
+  }
+
+  private markCompletedWithHelpLevels(passedWithHelpLevels: number[]): void {
+    const levelList = document.querySelectorAll<HTMLLinkElement>('.level');
+    if (passedWithHelpLevels && passedWithHelpLevels.length > 0) {
+      passedWithHelpLevels.forEach((index: number): void => {
+        levelList[index].classList.add('completed-with-help');
+      });
+    } else {
+      levelList.forEach((level: HTMLLinkElement): void => {
+        level.classList.remove('completed-with-help');
       });
     }
   }
@@ -196,6 +213,7 @@ class App {
     const answer: string = levels[progress.currentLevel].selector;
     const answerChars: Array<string> = answer.split('');
     let i = 0;
+    progress.passedWithHelpLevels.push(progress.currentLevel);
 
     const typeText = (): void => {
       input.value += answerChars[i];

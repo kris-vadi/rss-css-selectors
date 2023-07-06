@@ -2,6 +2,7 @@ export type Progress = {
   currentLevel: number;
   passedLevels: number[];
   failedLevels: number[];
+  passedWithHelpLevels: number[];
 };
 
 export interface Level {
