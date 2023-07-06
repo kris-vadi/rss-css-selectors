@@ -1,62 +1,119 @@
+import hljs from 'highlight.js';
+import 'highlight.js/styles/rainbow.css';
+
 class Editor {
   boardMarkup: string;
 
   constructor(boardMarkup: string) {
     this.boardMarkup = boardMarkup;
-    this.addMouseEventOnMarkup();
   }
 
   public addBoardMarkup():void {
-    const markup = document.querySelector('.editor__markup') as HTMLDivElement;
-    const newMarkup = this.getMarkup();
+    const markup = document.querySelector('.editor__markup') as HTMLElement;
     Editor.clearEditor();
-    markup.append(newMarkup);
+    markup.innerHTML = hljs.highlight(this.boardMarkup, { language: 'xml' }).value;
+    this.addMouseEventOnMarkup();
   }
 
   public addMouseEventOnMarkup(): void {
-    const editorMarkup = document.querySelector('.editor__markup') as HTMLDivElement;
-    const tableSurface = document.querySelector('.table__surface') as HTMLDivElement;
+    const markupElements = document.querySelectorAll<HTMLElement>('.hljs-tag');
 
-    editorMarkup.addEventListener('mouseover', (event: Event): void => {
-      const target = event.target as HTMLDivElement;
+    this.addMouseOverEvent(markupElements);
+    this.addMoueOutEvent(markupElements);
+  }
 
-      if (target.classList.length === 0 && target.tagName.toLocaleLowerCase() === 'div') {
-        target.classList.add('highlight');
+  private addMoueOutEvent(elements: NodeListOf<HTMLElement>): void {
+    const tableElements = document.querySelectorAll<HTMLElement>('.table__surface *');
 
-        const el = document.querySelector('.highlight') as HTMLElement;
-        const index = el.parentNode ? [...el.parentNode.children].indexOf(el) : -1;
+    elements.forEach((element) => {
+      element.addEventListener('mouseout', (event: Event): void => {
+        event.stopPropagation();
 
-        this.findElementOnTable(tableSurface, target.innerText, index);
-      }
-    });
-
-    editorMarkup.addEventListener('mouseout', (event: Event): void => {
-      const target = event.target as HTMLDivElement;
-      if (target.tagName.toLocaleLowerCase() === 'div' && target.classList.contains('highlight')) {
-        target.classList.remove('highlight');
-        document.querySelector('.backlight')?.classList.remove('backlight');
-      }
-      
+        elements.forEach((el) => {
+          el.classList.remove('selected');
+        });
+        tableElements.forEach((el) => {
+          el.classList.remove('selected');
+        });
+      });
     });
   }
 
-  private findElementOnTable(element: Element, text: string, index: number): void {
-    const childrenElements: HTMLCollection = element.children;
-    text = Editor.removeSpaces(text);
+  private addMouseOverEvent(elements: NodeListOf<HTMLElement>): void {
+    for (let i = 0; i < elements.length; i += 1) {
+      const element = elements[i];
+      element.addEventListener('mouseover', (event: Event): void => {
+        event.stopPropagation();
+        element.classList.add('selected');
+        this.addClassOnTaggetElements(i, element, elements);
+      });
+    }
+  }
 
-    if (childrenElements.length === 0) return;
+  private addClassOnTaggetElements(i: number, element: HTMLElement, elements: NodeListOf<HTMLElement>): void {
+    const table = document.querySelector('.table__surface') as HTMLElement;
+    const elementText: string | null = element.textContent;
+    const regex = /<|>|\//ig;
 
-    for (let i = 0; i < childrenElements.length; i += 1) {
-      const currentElement = childrenElements[i];
-      let currentHtml = currentElement.outerHTML.replace('class="dance"', '').replace('dance', '').replace('class=""', '');
-      currentHtml = Editor.removeSpaces(currentHtml);
+    if (elementText && elementText.includes('</')) {
+      const openTag: string | null = this.findOpenTag(i, elements);
+      const tag = openTag?.replace(regex, '');
+      if (tag) this.findMatchingElement(tag, i - 1, table);
+    } else {
+      const closeTag = this.findCloseTag(i, elements);
+      const tag = closeTag?.replace(regex, '');
+      if (tag) {
+        this.findMatchingElement(tag, i, table);
+      }
+    }
+  }
 
-      if (currentHtml === text && index === i) {
-        currentElement.classList.add('backlight');
+  private getTextContent(i: number, elements: NodeListOf<HTMLElement>): string | null {
+    const element = elements[i].querySelector('.hljs-name') as HTMLSpanElement;
+    const tagName: string | null = element?.textContent;
+    return tagName;
+  }
+  
+  private findCloseTag(i: number, elements: NodeListOf<HTMLElement>): string | null  {
+    const tagName: string | null = this.getTextContent(i, elements);
+
+    for (let j = i + 1; j < elements.length; j += 1) {
+      const currentTagName: string | null = this.getTextContent(j, elements);
+      elements[j].classList.add('selected');
+      if (tagName === currentTagName && elements[j].textContent?.includes('</')) {
+        return (elements[j]) ? elements[j].textContent : null;
+      }
+    }
+    return null;
+  }
+
+  private findOpenTag(i: number, elements: NodeListOf<HTMLElement>): string | null {
+    const tagName: string | null = this.getTextContent(i, elements);
+
+    for (let j = i; j >= 0; j -= 1) {
+      const currentTagName: string | null = this.getTextContent(j, elements);
+      if (tagName === currentTagName && !elements[j].textContent?.includes('</')) {
+        elements[j].classList.add('selected');
+        return (elements[j]) ? elements[j].textContent : null;
+      }
+    }
+    return null;
+  }
+
+  private findMatchingElement(tag: string, index: number, elemenet: HTMLElement): void {
+    const tableElements = elemenet.children as HTMLCollection;
+
+    for (let i = 0; i < tableElements.length; i += 1) {
+      const currentElement = tableElements[i] as HTMLElement;
+      const currentId: string = currentElement.id;
+      const id: number = parseInt(currentId);
+
+      if (currentElement.tagName.toLocaleLowerCase() === tag && index === id) {
+        currentElement.classList.add('selected');
       }
 
       if (currentElement.hasChildNodes()) {
-        this.findElementOnTable(currentElement, text, index);
+        this.findMatchingElement(tag, index, currentElement as HTMLElement);
       }
     }
   }
@@ -71,59 +128,6 @@ class Editor {
 
   static removeSpaces(str: string): string {
     return str.trim().split('').filter((el) => el != ' ').join('');
-  }
-
-  private getMarkup(): HTMLElement {
-    const htmlElement = document.createElement('div') as HTMLDivElement;
-    htmlElement.innerHTML = this.boardMarkup;
-    const newElement = this.wrapTagsInDiv(htmlElement);
-
-    return (newElement) ? newElement : htmlElement;
-  }
-
-  private wrapTagsInDiv(htmlMarkupElement: HTMLElement): HTMLElement | undefined {
-    const hasChildren: boolean = (htmlMarkupElement.children.length > 0) ? true : false;
-    const wrapper = document.createElement('div') as HTMLElement;
-
-    if (hasChildren) {
-      const markupElementChildren: HTMLCollection = htmlMarkupElement.children;
-
-      for (const node of markupElementChildren) {
-        if (markupElementChildren.length > 1) {
-          const newElement = document.createElement('div') as HTMLElement;
-
-          this.appendElement(node, newElement);
-          wrapper.append(newElement);
-        }
-        if (markupElementChildren.length === 1) {
-          this. appendElement(node, wrapper);
-        }
-      }
-      
-    } else {
-      return undefined;
-    }
-
-    return wrapper;
-  }
-
-  private appendElement(node: Element, element: HTMLElement): void {
-    let openTag = '';
-
-    if (node.classList.length > 0) {
-      openTag = `<${node.tagName.toLocaleLowerCase()} class="${node.classList}">`;
-      element.append(openTag);
-    } else if (node.id) {
-      openTag = `<${node.tagName.toLocaleLowerCase()} id="${node.id}">`;
-      element.append(openTag);
-    } else {
-      element.append(`<${node.tagName.toLocaleLowerCase()}>`);
-    }
-    const innerElement: HTMLElement | undefined = this.wrapTagsInDiv(node as HTMLElement);
-    if (innerElement !== undefined) {
-      element.append(innerElement);
-    }
-    element.append(`</${node.tagName.toLocaleLowerCase()}>`);
   }
 }
 

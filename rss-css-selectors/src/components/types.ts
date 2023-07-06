@@ -13,4 +13,4 @@ export interface Level {
   help: string;
   examples: string[];
   boardMarkup: string;
-} 
+}

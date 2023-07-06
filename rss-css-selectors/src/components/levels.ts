@@ -155,8 +155,7 @@ export const levels: Level[] = [
       <orange></orange>
     </plate>
     <bento></bento>
-    <plate></plate>
-    `,
+    <plate></plate>`,
   },
   {
     selectorName : 'Comma Combinator',
