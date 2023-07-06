@@ -98,10 +98,15 @@ class App {
   private checkInputResult(): boolean {
     const input = document.querySelector('.editor__input') as HTMLInputElement;
     const inputRule: string = Editor.removeSpaces(input.value);
-    const correctAnswer: string = Editor.removeSpaces(levels[progress.currentLevel].selector);
+    const correctAnswers: string[] = levels[progress.currentLevel].selector;
+    let isCorrect = false;
 
-    
-    return (inputRule === correctAnswer);
+    correctAnswers.forEach((answer) => {
+      answer = Editor.removeSpaces(answer);
+      if (inputRule === answer) isCorrect = true;
+    });
+
+    return isCorrect;
   }
 
   private checkIsWin(): boolean | null {
@@ -210,8 +215,8 @@ class App {
 
   private typeAnswer = (): void => {
     const input = document.querySelector('.editor__input') as HTMLInputElement;
-    const answer: string = levels[progress.currentLevel].selector;
-    const answerChars: Array<string> = answer.split('');
+    const answers: string[] = levels[progress.currentLevel].selector;
+    const answerChars: Array<string> = answers[0].split('');
     let i = 0;
     progress.passedWithHelpLevels.push(progress.currentLevel);
 
